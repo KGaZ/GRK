@@ -1,6 +1,5 @@
 package grk.galgan.dziopek;
 
-import grk.galgan.dziopek.models.HistoricalBoundry;
 import grk.galgan.dziopek.models.scenes.Scenes;
 import grk.galgan.dziopek.utils.GeoJsonParser;
 import imgui.ImGui;
@@ -10,11 +9,9 @@ import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
-
-import java.util.List;
-
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13C.GL_MULTISAMPLE;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Application {
@@ -60,6 +57,7 @@ public class Application {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+        glfwWindowHint(GLFW_SAMPLES, 4);
 
         this.window = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
 
@@ -78,9 +76,12 @@ public class Application {
         glfwSwapInterval(1);
         glfwShowWindow(this.window);
         GL.createCapabilities();
+        glEnable(GL_MULTISAMPLE);
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glLineWidth(20.0f);
+        glEnable(GL_LINE_SMOOTH);
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
